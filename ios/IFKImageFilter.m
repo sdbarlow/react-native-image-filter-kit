@@ -1,5 +1,5 @@
 #import "IFKImageFilter.h"
-#import "RCTImageView.h"
+#import <React/RCTImageView.h>
 #import <React/RCTImageSource.h>
 #import "RCTImageView+CacheKey.h"
 #import "NSArray+FilterMapReduce.h"
@@ -419,6 +419,7 @@ typedef BFTask<NSString *> DeferredExtractedImagePath;
   }
 }
 
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(RCTImageView *)object
                         change:(NSDictionary *)change
@@ -431,7 +432,7 @@ typedef BFTask<NSString *> DeferredExtractedImagePath;
                                   : [self->_originalImages at:idx]];
       
       return acc;
-    } init:_originalImages];
+    } init:[NSMutableArray arrayWithArray:_originalImages]];
     
     [self runFilterPipelineAndInvalidate:YES onlyCheckCache:NO];
     
