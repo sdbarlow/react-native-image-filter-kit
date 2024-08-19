@@ -4,11 +4,11 @@
 #import <React/RCTView.h>
 #import "IFKCacheable.h"
 
-@interface RCTImageView : RCTView
-@end
+@interface RCTImageViewCacheKey : NSObject <IFKCacheable>
 
-@interface RCTImageView (CacheKey) <IFKCacheable>
+@property (nonatomic, weak) RCTView *imageView;
 
+- (instancetype)initWithImageView:(RCTView *)imageView;
 - (nonnull NSString *)cacheKey;
 
 @end

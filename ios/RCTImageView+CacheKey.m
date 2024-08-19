@@ -2,14 +2,21 @@
 #import <React/RCTImageSource.h>
 #import "NSArray+FilterMapReduce.h"
 
-@implementation RCTImageView (CacheKey)
+@implementation RCTImageViewCacheKey
+
+- (instancetype)initWithImageView:(RCTView *)imageView {
+    self = [super init];
+    if (self) {
+        _imageView = imageView;
+    }
+    return self;
+}
 
 - (nonnull NSString *)cacheKey
 {
     // Assuming imageSources and resizeMode are properties of RCTImageView
-    // If they're not, you may need to adjust this implementation
-    NSArray<RCTImageSource *> *imageSources = [self valueForKey:@"imageSources"];
-    NSInteger resizeMode = [[self valueForKey:@"resizeMode"] integerValue];
+    NSArray<RCTImageSource *> *imageSources = [self.imageView valueForKey:@"imageSources"];
+    NSInteger resizeMode = [[self.imageView valueForKey:@"resizeMode"] integerValue];
     
     return [imageSources reduce:^id(NSString *key, RCTImageSource *source, int idx) {
         return [NSString stringWithFormat:
@@ -20,6 +27,17 @@
                 source.request.URL.absoluteString];
         
     } init:[NSString stringWithFormat:@"%ld", (long)resizeMode]];
+}
+
+@end
+
+// Category to add the cacheKey method to RCTImageView
+@implementation RCTView (CacheKey)
+
+- (nonnull NSString *)cacheKey
+{
+    RCTImageViewCacheKey *cacheKey = [[RCTImageViewCacheKey alloc] initWithImageView:self];
+    return [cacheKey cacheKey];
 }
 
 @end
