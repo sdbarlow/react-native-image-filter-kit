@@ -1,3 +1,4 @@
+#import <React/RCTImageView.h>
 #import "RCTImageView.h"
 #import "IFKCacheable.h"
 

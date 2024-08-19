@@ -1,3 +1,4 @@
+#import <React/RCTImageView.h>
 #import "RCTImageView+CacheKey.h"
 #import <React/RCTImageSource.h>
 #import "NSArray+FilterMapReduce.h"
